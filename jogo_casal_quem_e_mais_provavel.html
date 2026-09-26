@@ -7,7 +7,7 @@
 <style>
 :root{--bg:#120c1f;--card:#211532;--card2:#2d1d40;--pink:#ff4f9a;--purple:#8b5cf6;--green:#38d39f;--red:#ff667a;--text:#fff;--muted:#c9bdd6}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#2a1741,#120c1f 55%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
-button,input{font:inherit}button{border:0;cursor:pointer}.app{max-width:760px;margin:auto;padding:22px 16px 40px}.logo{text-align:center;margin:10px 0 25px}.logo h1{font-size:34px;margin:0}.logo p{color:var(--muted);margin:7px 0}.card{background:rgba(33,21,50,.95);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:22px;box-shadow:0 15px 50px rgba(0,0,0,.3);margin-bottom:16px}.title{font-size:25px;font-weight:800;margin:0 0 8px}.muted{color:var(--muted)}.grid{display:grid;gap:12px}.role{padding:22px;border-radius:20px;background:var(--card2);text-align:left;color:white}.role strong{display:block;font-size:21px}.role span{display:block;color:var(--muted);margin-top:5px}.primary{width:100%;padding:15px 18px;border-radius:15px;background:linear-gradient(135deg,var(--pink),var(--purple));color:white;font-weight:800}.secondary{width:100%;padding:13px 18px;border-radius:15px;background:#3a294d;color:white}.danger{background:#4b2532}.input{width:100%;padding:14px;border-radius:14px;border:1px solid #554364;background:#160e24;color:white;outline:none;margin:7px 0}.couple-list{display:grid;gap:10px;margin:15px 0}.couple{display:flex;justify-content:space-between;align-items:center;background:#2b1b3d;padding:15px;border-radius:16px}.couple .score{font-size:22px;font-weight:900;color:#ff75ad}.question{font-size:31px;line-height:1.15;text-align:center;font-weight:900;padding:25px 5px}.badge{text-align:center;color:#ffd1e6;font-weight:800}.scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:10px}.scorebox{text-align:center;background:#2b1b3d;border-radius:18px;padding:14px}.scorebox .n{font-weight:900;font-size:18px}.scorebox .s{font-size:34px;font-weight:900;color:#ff75ad}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.correct{background:var(--green);color:#09251c;padding:17px;border-radius:15px;font-weight:900}.wrong{background:var(--red);color:white;padding:17px;border-radius:15px;font-weight:900}.choice{width:80%;min-height:32vh;padding:30px 20px;margin:0 auto;border-radius:24px;color:white;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.22);transition:transform .15s,filter .15s,box-shadow .15s}.choice:active{transform:scale(.98)}.choice.ele{background:#1976d2}.choice.ela{background:#e83e8c}.choice.selected{box-shadow:0 0 0 4px rgba(255,255,255,.9),0 10px 30px rgba(0,0,0,.28);filter:brightness(1.08)}.choice small{display:block;font-size:14px;color:rgba(255,255,255,.88);margin-top:5px}.winner{text-align:center}.winner .trophy{font-size:65px}.winner h2{font-size:32px;margin:5px 0}.hidden{display:none!important}.row{display:flex;gap:10px}.row>*{flex:1}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.tiny{font-size:12px;color:var(--muted)}.progress{height:8px;background:#39284b;border-radius:20px;overflow:hidden;margin:14px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--purple));transition:.3s}.notice{padding:13px;border-radius:14px;background:#342241;color:#e9dff0;font-size:14px;margin-top:12px}.footer{text-align:center;color:#8f809e;font-size:12px;margin-top:20px}
+button,input{font:inherit}button{border:0;cursor:pointer}.app{max-width:760px;margin:auto;padding:22px 16px 40px}.logo{text-align:center;margin:10px 0 25px}.logo h1{font-size:34px;margin:0}.logo p{color:var(--muted);margin:7px 0}.card{background:rgba(33,21,50,.95);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:22px;box-shadow:0 15px 50px rgba(0,0,0,.3);margin-bottom:16px}.title{font-size:25px;font-weight:800;margin:0 0 8px}.muted{color:var(--muted)}.grid{display:grid;gap:12px}.role{padding:22px;border-radius:20px;background:var(--card2);text-align:left;color:white}.role strong{display:block;font-size:21px}.role span{display:block;color:var(--muted);margin-top:5px}.primary{width:100%;padding:15px 18px;border-radius:15px;background:linear-gradient(135deg,var(--pink),var(--purple));color:white;font-weight:800}.secondary{width:100%;padding:13px 18px;border-radius:15px;background:#3a294d;color:white}.danger{background:#4b2532}.input{width:100%;padding:14px;border-radius:14px;border:1px solid #554364;background:#160e24;color:white;outline:none;margin:7px 0}.couple-list{display:grid;gap:10px;margin:15px 0}.couple{display:flex;justify-content:space-between;align-items:center;background:#2b1b3d;padding:15px;border-radius:16px}.couple .score{font-size:22px;font-weight:900;color:#ff75ad}.question{font-size:31px;line-height:1.15;text-align:center;font-weight:900;padding:25px 5px}.badge{text-align:center;color:#ffd1e6;font-weight:800}.scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:10px}.scorebox{text-align:center;background:#2b1b3d;border-radius:18px;padding:14px}.scorebox .n{font-weight:900;font-size:18px}.scorebox .s{font-size:34px;font-weight:900;color:#ff75ad}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.correct{background:var(--green);color:#09251c;padding:17px;border-radius:15px;font-weight:900}.wrong{background:var(--red);color:white;padding:17px;border-radius:15px;font-weight:900}.choice{padding:26px;border-radius:20px;background:linear-gradient(135deg,#38224e,#27183a);color:white;font-size:28px;font-weight:900}.choice small{display:block;font-size:14px;color:var(--muted);margin-top:5px}.winner{text-align:center}.winner .trophy{font-size:65px}.winner h2{font-size:32px;margin:5px 0}.hidden{display:none!important}.row{display:flex;gap:10px}.row>*{flex:1}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.tiny{font-size:12px;color:var(--muted)}.progress{height:8px;background:#39284b;border-radius:20px;overflow:hidden;margin:14px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--purple));transition:.3s}.notice{padding:13px;border-radius:14px;background:#342241;color:#e9dff0;font-size:14px;margin-top:12px}.footer{text-align:center;color:#8f809e;font-size:12px;margin-top:20px}
 @media(max-width:500px){.app{padding:16px 12px}.logo h1{font-size:28px}.question{font-size:27px}.actions{grid-template-columns:1fr}.scoreboard{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -28,13 +28,13 @@ function load(){ try{const x=JSON.parse(localStorage.getItem("casalGame")); if(x
 function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
 function render(){
   const el=document.getElementById("app");
-  if(state.screen==="home") renderHome(el);
+  if(state.screen==="home") home(el);
   else if(state.screen==="setup") setup(el);
   else if(state.screen==="main") main(el);
   else if(state.screen==="player") player(el);
   else if(state.screen==="winner") winner(el);
 }
-function renderHome(el){
+function home(el){
  el.innerHTML=`<div class="logo"><div style="font-size:55px">💑</div><h1>Quem é mais provável?</h1><p>Jogo de casal • até 25 pontos</p></div>
  <div class="card"><div class="title">Como este celular será usado?</div><p class="muted">Escolha o modo. O celular principal controla as perguntas e a pontuação.</p>
  <div class="grid">
@@ -43,13 +43,10 @@ function renderHome(el){
  </div></div>
  <div class="card"><b>Regra</b><p class="muted">A cada pergunta, o casal responde quem se encaixa mais. O principal marca se a resposta foi considerada correta. Cada acerto vale 1 ponto. O primeiro casal a chegar a 25 vence.</p></div>`;
 }
-function goCentral(){
-  window.location.href="index.html";
-}
 function goSetup(){state.screen="setup";save();render()}
 function setup(el){
- const rows=state.couples.map((c,i)=>`<div class="couple"><div><b>Casal ${String.fromCharCode(65+i)}</b><div class="tiny">${esc(c.name)}</div></div><b class="score">${state.couples[i+""]?.score??0}</b></div>`).join("");
- el.innerHTML=`<div class="topbar"><div class="row" style="flex:0 0 auto"><button class="secondary" style="width:auto;padding:9px 13px" onclick="goHome()">← Voltar</button><button class="secondary" style="width:auto;padding:9px 13px" onclick="goCentral()">🎮 Central</button></div><span class="tiny">CONFIGURAÇÃO</span></div>
+ const rows=state.couples.map((c,i)=>`<div class="couple"><div><b>Casal ${String.fromCharCode(65+i)}</b><div class="tiny">${esc(c)}</div></div><b class="score">${state.couples[i+""]?.score??0}</b></div>`).join("");
+ el.innerHTML=`<div class="topbar"><button class="secondary" style="width:auto;padding:9px 13px" onclick="home()">← Voltar</button><span class="tiny">CONFIGURAÇÃO</span></div>
  <div class="card"><div class="title">Cadastre os casais</div><p class="muted">Informe um nome para cada casal.</p>
  <div class="row"><input class="input" id="coupleName" placeholder="Ex.: Ana & João"><button class="primary" style="flex:0 0 110px;margin:7px 0" onclick="addCouple()">Adicionar</button></div>
  <div class="couple-list">${rows||'<p class="muted">Nenhum casal cadastrado.</p>'}</div>
@@ -62,7 +59,7 @@ function main(el){
  if(!c)return goSetup();
  const q=state.questions[state.questionIndex%state.questions.length];
  const pct=Math.min(100,(c.score/25)*100);
- el.innerHTML=`<div class="topbar"><div class="row" style="flex:0 0 auto"><button class="secondary" style="width:auto;padding:9px 13px" onclick="goHome()">⌂ Início</button><button class="secondary" style="width:auto;padding:9px 13px" onclick="goCentral()">🎮 Central</button></div><span class="tiny">CELULAR PRINCIPAL</span></div>
+ el.innerHTML=`<div class="topbar"><button class="secondary" style="width:auto;padding:9px 13px" onclick="home()">⌂ Início</button><span class="tiny">CELULAR PRINCIPAL</span></div>
  <div class="scoreboard">${state.couples.map((x,i)=>`<div class="scorebox"><div class="n">${esc(x.name)}</div><div class="s">${x.score}</div></div>`).join("")}</div>
  <div class="progress"><i style="width:${pct}%"></i></div>
  <div class="card"><div class="badge">PERGUNTA PARA ${esc(c.name).toUpperCase()}</div><div class="question">${esc(q)}</div>
@@ -79,56 +76,25 @@ function answer(correct){
 }
 function nextCouple(){
  state.currentCouple=(state.currentCouple+1)%state.couples.length;
- state.questionIndex++;
- if(state.questionIndex>=state.questions.length){
-   state.questions=shuffle(QUESTIONS);
-   state.questionIndex=0;
- }
+ if(state.currentCouple===0)state.questionIndex++;
  state.roundAnswered=false;save();render();
 }
-function goPlayer(){
-  state.screen="player";
-  save();
-  render();
-}
-
 function player(el){
- const eleSel=state.playerChoice==='Ele'?' selected':'';
- const elaSel=state.playerChoice==='Ela'?' selected':'';
- const clearBtn=state.playerChoice
-   ? `<button class="secondary" onclick="clearPlayerSelection()">Limpar seleção</button>`
-   : '';
- el.innerHTML=`<div class="topbar">
-   <div class="row" style="flex:0 0 auto">
-     <button class="secondary" style="width:auto;padding:9px 13px" onclick="goHome()">← Voltar</button>
-     <button class="secondary" style="width:auto;padding:9px 13px" onclick="goCentral()">🎮 Central</button>
-   </div>
-   <span class="tiny">CELULAR DO JOGADOR</span>
- </div>
- <div style="min-height:calc(100vh - 130px);display:flex;align-items:center;justify-content:center;padding:12px">
-   <div style="width:100%;display:grid;gap:18px">
-     <button class="choice ele${eleSel}" onclick="playerSelected('Ele')">ELE</button>
-     <button class="choice ela${elaSel}" onclick="playerSelected('Ela')">ELA</button>
-     ${clearBtn}
-   </div>
- </div>`;
+ el.innerHTML=`<div class="topbar"><button class="secondary" style="width:auto;padding:9px 13px" onclick="home()">← Voltar</button><span class="tiny">CELULAR DO JOGADOR</span></div>
+ <div class="card"><div class="title">Quem é você?</div><p class="muted">Toque na opção que representa você. O celular principal continua controlando a pontuação.</p>
+ <div class="grid"><button class="choice" onclick="playerSelected('Ele')">👨 Ele<small>Eu sou ELE</small></button><button class="choice" onclick="playerSelected('Ela')">👩 Ela<small>Eu sou ELA</small></button></div>
+ <div id="playerStatus" class="notice hidden"></div></div>
+ <div class="card"><b>Como jogar em vários celulares</b><p class="muted">Este arquivo funciona sem internet e sem banco de dados. Porém, celulares diferentes não compartilham automaticamente o estado do jogo apenas com HTML/localStorage. Para sincronização entre aparelhos, será necessária uma conexão local/WebRTC ou um pequeno servidor.</p></div>`;
 }
 function playerSelected(x){
- state.playerChoice=x;
- save();
- render();
-}
-function clearPlayerSelection(){
- state.playerChoice=null;
- save();
- render();
+ $("playerStatus").classList.remove("hidden");$("playerStatus").innerHTML=`Você selecionou <b>${x}</b>.<br>Agora responda verbalmente à pergunta mostrada no celular principal.`;
 }
 function winner(el){
  const c=state.couples[state.currentCouple];
- el.innerHTML=`<div class="card winner"><div class="trophy">🏆</div><div class="tiny">VENCEDOR</div><h2>${esc(c.name)}</h2><p class="muted">Chegou a 25 pontos!</p><div class="scorebox"><div class="s">25</div><div class="n">pontos</div></div><button class="primary" style="margin-top:16px" onclick="goSetup()">Nova partida</button><button class="secondary" style="margin-top:9px" onclick="goCentral()">🎮 Voltar para a Central de Jogos</button></div>`;
+ el.innerHTML=`<div class="card winner"><div class="trophy">🏆</div><div class="tiny">VENCEDOR</div><h2>${esc(c.name)}</h2><p class="muted">Chegou a 25 pontos!</p><div class="scorebox"><div class="s">25</div><div class="n">pontos</div></div><button class="primary" style="margin-top:16px" onclick="goSetup()">Nova partida</button></div>`;
 }
-function resetGame(){if(confirm("Encerrar a partida e apagar os casais desta sessão?")){localStorage.removeItem("casalGame");state={screen:"home",couples:[],currentCouple:0,questionIndex:0,questions:[],playerChoice:null};render()}}
-function goHome(){state.screen="home";save();render()}
+function resetGame(){if(confirm("Encerrar a partida e apagar os casais desta sessão?")){localStorage.removeItem("casalGame");state={screen:"home",couples:[],currentCouple:0,questionIndex:0,questions:[]};render()}}
+function home(){state.screen="home";save();render()}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 load();render();
 </script>
