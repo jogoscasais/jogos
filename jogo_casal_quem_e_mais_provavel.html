@@ -4,132 +4,1352 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Quem é mais provável? — Jogo de Casal</title>
+
 <style>
-:root{--bg:#120c1f;--card:#211532;--card2:#2d1d40;--pink:#ff4f9a;--purple:#8b5cf6;--green:#38d39f;--red:#ff667a;--text:#fff;--muted:#c9bdd6}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#2a1741,#120c1f 55%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
-button,input{font:inherit}button{border:0;cursor:pointer}.app{max-width:760px;margin:auto;padding:22px 16px 40px}.logo{text-align:center;margin:10px 0 25px}.logo h1{font-size:34px;margin:0}.logo p{color:var(--muted);margin:7px 0}.card{background:rgba(33,21,50,.95);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:22px;box-shadow:0 15px 50px rgba(0,0,0,.3);margin-bottom:16px}.title{font-size:25px;font-weight:800;margin:0 0 8px}.muted{color:var(--muted)}.grid{display:grid;gap:12px}.role{padding:22px;border-radius:20px;background:var(--card2);text-align:left;color:white}.role strong{display:block;font-size:21px}.role span{display:block;color:var(--muted);margin-top:5px}.primary{width:100%;padding:15px 18px;border-radius:15px;background:linear-gradient(135deg,var(--pink),var(--purple));color:white;font-weight:800}.secondary{width:100%;padding:13px 18px;border-radius:15px;background:#3a294d;color:white}.danger{background:#4b2532}.input{width:100%;padding:14px;border-radius:14px;border:1px solid #554364;background:#160e24;color:white;outline:none;margin:7px 0}.couple-list{display:grid;gap:10px;margin:15px 0}.couple{display:flex;justify-content:space-between;align-items:center;background:#2b1b3d;padding:15px;border-radius:16px}.couple .score{font-size:22px;font-weight:900;color:#ff75ad}.question{font-size:31px;line-height:1.15;text-align:center;font-weight:900;padding:25px 5px}.badge{text-align:center;color:#ffd1e6;font-weight:800}.scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:10px}.scorebox{text-align:center;background:#2b1b3d;border-radius:18px;padding:14px}.scorebox .n{font-weight:900;font-size:18px}.scorebox .s{font-size:34px;font-weight:900;color:#ff75ad}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.correct{background:var(--green);color:#09251c;padding:17px;border-radius:15px;font-weight:900}.wrong{background:var(--red);color:white;padding:17px;border-radius:15px;font-weight:900}.choice{width:80%;min-height:32vh;padding:30px 20px;margin:0 auto;border-radius:24px;color:white;font-size:44px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.22);transition:transform .15s,filter .15s,box-shadow .15s}.choice:active{transform:scale(.98)}.choice.ele{background:#1976d2}.choice.ela{background:#e83e8c}.choice.selected{box-shadow:0 0 0 4px rgba(255,255,255,.9),0 10px 30px rgba(0,0,0,.28);filter:brightness(1.08)}.choice small{display:block;font-size:14px;color:rgba(255,255,255,.88);margin-top:5px}.winner{text-align:center}.winner .trophy{font-size:65px}.winner h2{font-size:32px;margin:5px 0}.hidden{display:none!important}.row{display:flex;gap:10px}.row>*{flex:1}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.tiny{font-size:12px;color:var(--muted)}.progress{height:8px;background:#39284b;border-radius:20px;overflow:hidden;margin:14px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--purple));transition:.3s}.notice{padding:13px;border-radius:14px;background:#342241;color:#e9dff0;font-size:14px;margin-top:12px}.footer{text-align:center;color:#8f809e;font-size:12px;margin-top:20px}
-@media(max-width:500px){.app{padding:16px 12px}.logo h1{font-size:28px}.question{font-size:27px}.actions{grid-template-columns:1fr}.scoreboard{grid-template-columns:1fr 1fr}}
-</style>
-</head>
-<body>
-<div class="app">
-  <div id="app"></div>
-  <div class="footer">Jogo local • Sem banco de dados • Perguntas embaralhadas a cada partida</div>
-</div>
-<script>
-const QUESTIONS = ["Quem se atrasa mais?", "Quem demora mais para se arrumar?", "Quem toma um banho mais longo?", "Quem dorme mais?", "Quem acorda mais cedo?", "Quem aperta mais o botão soneca?", "Quem fica mais tempo no celular?", "Quem responde mensagens mais rápido?", "Quem demora mais para responder?", "Quem manda mais áudios?", "Quem tira mais fotos?", "Quem tira mais selfies?", "Quem esquece mais onde colocou as coisas?", "Quem perde mais as chaves?", "Quem esquece mais datas importantes?", "Quem é mais organizado?", "Quem é mais bagunceiro?", "Quem arruma a casa com mais frequência?", "Quem cozinha melhor?", "Quem come mais?", "Quem come mais doce?", "Quem pede mais comida por aplicativo?", "Quem escolhe o restaurante?", "Quem demora mais para escolher o que comer?", "Quem bebe mais água?", "Quem toma mais café?", "Quem gosta mais de experimentar comidas novas?", "Quem é mais exigente com comida?", "Quem deixa mais comida no prato?", "Quem faz mais lanches fora de hora?", "Quem acorda com mais fome?", "Quem ronca mais?", "Quem fala dormindo?", "Quem se mexe mais enquanto dorme?", "Quem ocupa mais espaço na cama?", "Quem rouba mais o cobertor?", "Quem dorme mais rápido?", "Quem demora mais para pegar no sono?", "Quem acorda mais mal-humorado?", "Quem fica mais tempo na cama?", "Quem é mais pontual?", "Quem planeja mais as coisas?", "Quem improvisa mais?", "Quem esquece compromissos?", "Quem faz mais listas?", "Quem é mais responsável?", "Quem é mais distraído?", "Quem presta mais atenção aos detalhes?", "Quem muda mais de ideia?", "Quem toma decisões mais rápido?", "Quem pede mais opinião?", "Quem é mais indeciso?", "Quem gosta mais de sair?", "Quem prefere ficar em casa?", "Quem marca mais encontros com amigos?", "Quem faz mais amizade facilmente?", "Quem conversa mais com desconhecidos?", "Quem é mais tímido?", "Quem fala mais?", "Quem escuta melhor?", "Quem interrompe mais nas conversas?", "Quem conta mais histórias?", "Quem faz mais piadas?", "Quem ri mais?", "Quem é mais competitivo?", "Quem odeia perder mais?", "Quem comemora mais uma vitória?", "Quem pede desculpas primeiro?", "Quem fica bravo mais rápido?", "Quem se acalma mais rápido?", "Quem é mais paciente?", "Quem perde a paciência mais facilmente?", "Quem guarda mais rancor?", "Quem perdoa mais rápido?", "Quem demonstra mais carinho?", "Quem diz mais 'eu te amo'?", "Quem faz mais surpresas?", "Quem dá mais presentes?", "Quem lembra mais de pequenos detalhes do outro?", "Quem sente mais saudade?", "Quem é mais ciumento?", "Quem é mais romântico?", "Quem manda mais mensagens carinhosas?", "Quem gosta mais de abraços?", "Quem gosta mais de beijo?", "Quem inicia mais conversas sobre o relacionamento?", "Quem faz mais planos para o futuro?", "Quem fala mais sobre casamento?", "Quem escolheria uma viagem de última hora?", "Quem planeja melhor uma viagem?", "Quem arruma a mala mais rápido?", "Quem leva mais coisas na mala?", "Quem esquece alguma coisa na viagem?", "Quem gosta mais de praia?", "Quem prefere montanha?", "Quem gosta mais de piscina?", "Quem tira mais fotos durante uma viagem?", "Quem dorme no caminho?", "Quem se perde mais facilmente?", "Quem pergunta mais informações durante uma viagem?", "Quem dirige melhor?", "Quem fica mais nervoso no trânsito?", "Quem reclama mais do trânsito?", "Quem escolhe a música no carro?", "Quem canta mais no carro?", "Quem aumenta mais o volume da música?", "Quem dança mais?", "Quem dança pior?", "Quem canta mais alto?", "Quem tem mais vergonha de dançar em público?", "Quem toparia fazer uma loucura por diversão?", "Quem é mais aventureiro?", "Quem teria coragem de pular de paraquedas?", "Quem experimentaria um esporte radical?", "Quem gosta mais de adrenalina?", "Quem assiste mais séries?", "Quem escolhe o filme?", "Quem dorme durante o filme?", "Quem assiste episódios seguidos?", "Quem pesquisa o final antes?", "Quem chora mais com filmes?", "Quem gosta mais de terror?", "Quem se assusta mais facilmente?", "Quem prefere comédia?", "Quem gosta mais de desenhos?", "Quem passa mais tempo no YouTube?", "Quem passa mais tempo no Instagram?", "Quem passa mais tempo no TikTok?", "Quem acompanha mais notícias?", "Quem conhece mais memes?", "Quem tem mais aplicativos no celular?", "Quem troca de celular mais cedo?", "Quem cuida melhor do celular?", "Quem tem mais fotos na galeria?", "Quem deixa mais notificações acumuladas?", "Quem usa mais emojis?", "Quem manda mais figurinhas?", "Quem faz mais compras online?", "Quem pesquisa mais antes de comprar?", "Quem compra por impulso?", "Quem gosta mais de promoções?", "Quem pechincha mais?", "Quem economiza mais?", "Quem gasta mais com coisas desnecessárias?", "Quem empresta dinheiro com mais facilidade?", "Quem é mais cuidadoso com dinheiro?", "Quem faz mais planos financeiros?", "Quem compra mais presentes para o outro?", "Quem limpa mais o carro?", "Quem cuida mais das plantas?", "Quem cuida melhor das coisas?", "Quem conserta mais coisas em casa?", "Quem chama alguém para consertar?", "Quem troca lâmpadas mais rápido?", "Quem deixa luz acesa?", "Quem deixa porta aberta?", "Quem deixa armário aberto?", "Quem deixa copo pela casa?", "Quem esquece roupa no varal?", "Quem acumula mais roupa para lavar?", "Quem dobra melhor as roupas?", "Quem arruma melhor a cama?", "Quem lava mais louça?", "Quem suja mais louça?", "Quem reclama mais das tarefas domésticas?", "Quem faz mais faxina?", "Quem é mais cuidadoso com higiene?", "Quem usa mais perfume?", "Quem demora mais no banheiro?", "Quem fica mais tempo se olhando no espelho?", "Quem troca de roupa mais vezes?", "Quem compra mais roupas?", "Quem tem mais sapatos?", "Quem combina melhor as roupas?", "Quem pede opinião sobre a roupa?", "Quem se preocupa mais com aparência?", "Quem muda mais o visual?", "Quem corta o cabelo com mais frequência?", "Quem é mais vaidoso?", "Quem se arruma mais para sair?", "Quem sai de casa sem conferir o visual?", "Quem é mais provável de esquecer um aniversário?", "Quem é mais provável de esquecer uma senha?", "Quem é mais provável de perder o celular?", "Quem é mais provável de chegar atrasado a um voo?", "Quem é mais provável de esquecer o carregador?", "Quem é mais provável de derrubar o celular?", "Quem é mais provável de comprar algo e se arrepender?", "Quem é mais provável de ganhar um prêmio?", "Quem é mais provável de virar famoso?", "Quem é mais provável de começar uma dieta?", "Quem é mais provável de desistir de uma dieta?", "Quem é mais provável de fazer uma compra inesperada?", "Quem é mais provável de dormir no sofá?", "Quem é mais provável de rir em uma situação séria?", "Quem é mais provável de esquecer por que entrou em um cômodo?", "Quem é mais provável de mandar mensagem para a pessoa errada?", "Quem é mais provável de esquecer onde estacionou?", "Quem é mais provável de começar uma conversa com alguém desconhecido?", "Quem é mais provável de adotar um animal por impulso?"];
-let state = {
-  screen:"home", couples:[], currentCouple:0, questionIndex:0, questions:[],
-  playerChoice:null, roundAnswered:false
-};
-const $ = id => document.getElementById(id);
-function save(){ localStorage.setItem("casalGame", JSON.stringify(state)); }
-function load(){ try{const x=JSON.parse(localStorage.getItem("casalGame")); if(x) state=x}catch(e){} }
-function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
-function render(){
-  const el=document.getElementById("app");
-  if(state.screen==="home") renderHome(el);
-  else if(state.screen==="setup") setup(el);
-  else if(state.screen==="main") main(el);
-  else if(state.screen==="player") player(el);
-  else if(state.screen==="winner") winner(el);
-}
-function renderHome(el){
- el.innerHTML=`<div class="logo"><div style="font-size:55px">💑</div><h1>Quem é mais provável?</h1><p>Jogo de casal • até 25 pontos</p></div>
- <div class="card"><div class="title">Como este celular será usado?</div><p class="muted">Escolha o modo. O celular principal controla as perguntas e a pontuação.</p>
- <div class="grid">
-  <button class="role" onclick="goSetup()"><strong>📱 Celular principal</strong><span>Cadastrar casais, mostrar perguntas e marcar as respostas.</span></button>
-  <button class="role" onclick="goPlayer()"><strong>👤 Celular do jogador</strong><span>Escolher se você é <b>Ele</b> ou <b>Ela</b> e participar da rodada.</span></button>
- </div></div>
- <div class="card"><b>Regra</b><p class="muted">A cada pergunta, o casal responde quem se encaixa mais. O principal marca se a resposta foi considerada correta. Cada acerto vale 1 ponto. O primeiro casal a chegar a 25 vence.</p></div>`;
-}
-function goCentral(){
-  window.location.href="index.html";
-}
-function goSetup(){state.screen="setup";save();render()}
-function setup(el){
- const rows=state.couples.map((c,i)=>`<div class="couple"><div><b>Casal ${String.fromCharCode(65+i)}</b><div class="tiny">${esc(c.name)}</div></div><b class="score">${state.couples[i+""]?.score??0}</b></div>`).join("");
- el.innerHTML=`<div class="topbar"><div class="row" style="flex:0 0 auto"><button class="secondary" style="width:auto;padding:9px 13px" onclick="goHome()">← Voltar</button><button class="secondary" style="width:auto;padding:9px 13px" onclick="goCentral()">🎮 Central</button></div><span class="tiny">CONFIGURAÇÃO</span></div>
- <div class="card"><div class="title">Cadastre os casais</div><p class="muted">Informe um nome para cada casal.</p>
- <div class="row"><input class="input" id="coupleName" placeholder="Ex.: Ana & João"><button class="primary" style="flex:0 0 110px;margin:7px 0" onclick="addCouple()">Adicionar</button></div>
- <div class="couple-list">${rows||'<p class="muted">Nenhum casal cadastrado.</p>'}</div>
- <button class="primary" onclick="startGame()" ${state.couples.length<1?'disabled':''}>Começar jogo</button></div>`;
-}
-function addCouple(){const v=$("coupleName").value.trim();if(!v)return;state.couples.push({name:v,score:0});$("coupleName").value="";save();render()}
-function startGame(){if(!state.couples.length)return;state.couples.forEach(c=>c.score=0);state.questions=shuffle(QUESTIONS);state.questionIndex=0;state.currentCouple=0;state.roundAnswered=false;state.screen="main";save();render()}
-function main(el){
- const c=state.couples[state.currentCouple];
- if(!c)return goSetup();
- const q=state.questions[state.questionIndex%state.questions.length];
- const pct=Math.min(100,(c.score/25)*100);
- el.innerHTML=`<div class="topbar"><div class="row" style="flex:0 0 auto"><button class="secondary" style="width:auto;padding:9px 13px" onclick="goHome()">⌂ Início</button><button class="secondary" style="width:auto;padding:9px 13px" onclick="goCentral()">🎮 Central</button></div><span class="tiny">CELULAR PRINCIPAL</span></div>
- <div class="scoreboard">${state.couples.map((x,i)=>`<div class="scorebox"><div class="n">${esc(x.name)}</div><div class="s">${x.score}</div></div>`).join("")}</div>
- <div class="progress"><i style="width:${pct}%"></i></div>
- <div class="card"><div class="badge">PERGUNTA PARA ${esc(c.name).toUpperCase()}</div><div class="question">${esc(q)}</div>
- <div class="notice">O casal deve escolher <b>Ele</b> ou <b>Ela</b>. Depois, marque abaixo se a resposta foi considerada correta.</div>
- <div class="actions" style="margin-top:14px"><button class="correct" onclick="answer(true)">✓ RESPOSTA CERTA<br><small>+1 ponto</small></button><button class="wrong" onclick="answer(false)">✕ RESPOSTA ERRADA<br><small>sem ponto</small></button></div>
- </div>
- <div class="card"><button class="secondary" onclick="nextCouple()">Próximo casal</button><button class="secondary danger" style="margin-top:9px" onclick="resetGame()">Encerrar e limpar partida</button></div>`;
-}
-function answer(correct){
- const c=state.couples[state.currentCouple];
- if(correct)c.score++;
- if(c.score>=25){state.screen="winner";save();render();return}
- nextCouple();
-}
-function nextCouple(){
- state.currentCouple=(state.currentCouple+1)%state.couples.length;
- state.questionIndex++;
- if(state.questionIndex>=state.questions.length){
-   state.questions=shuffle(QUESTIONS);
-   state.questionIndex=0;
- }
- state.roundAnswered=false;save();render();
-}
-function goPlayer(){
-  state.screen="player";
-  save();
-  render();
+:root{
+  --bg:#120c1f;
+  --card:#211532;
+  --card2:#2d1d40;
+  --pink:#ff4f9a;
+  --purple:#8b5cf6;
+  --green:#38d39f;
+  --red:#ff667a;
+  --text:#fff;
+  --muted:#c9bdd6
 }
 
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:radial-gradient(circle at top,#2a1741,#120c1f 55%);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  min-height:100vh
+}
+
+button,input{
+  font:inherit
+}
+
+button{
+  border:0;
+  cursor:pointer
+}
+
+.app{
+  max-width:760px;
+  margin:auto;
+  padding:22px 16px 40px
+}
+
+.logo{
+  text-align:center;
+  margin:10px 0 25px
+}
+
+.logo h1{
+  font-size:34px;
+  margin:0
+}
+
+.logo p{
+  color:var(--muted);
+  margin:7px 0
+}
+
+.card{
+  background:rgba(33,21,50,.95);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:22px;
+  box-shadow:0 15px 50px rgba(0,0,0,.3);
+  margin-bottom:16px
+}
+
+.title{
+  font-size:25px;
+  font-weight:800;
+  margin:0 0 8px
+}
+
+.muted{
+  color:var(--muted)
+}
+
+.grid{
+  display:grid;
+  gap:12px
+}
+
+.role{
+  padding:22px;
+  border-radius:20px;
+  background:var(--card2);
+  text-align:left;
+  color:white
+}
+
+.role strong{
+  display:block;
+  font-size:21px
+}
+
+.role span{
+  display:block;
+  color:var(--muted);
+  margin-top:5px
+}
+
+.primary{
+  width:100%;
+  padding:15px 18px;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  color:white;
+  font-weight:800
+}
+
+.secondary{
+  width:100%;
+  padding:13px 18px;
+  border-radius:15px;
+  background:#3a294d;
+  color:white
+}
+
+.danger{
+  background:#4b2532
+}
+
+.input{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid #554364;
+  background:#160e24;
+  color:white;
+  outline:none;
+  margin:7px 0
+}
+
+.couple-list{
+  display:grid;
+  gap:10px;
+  margin:15px 0
+}
+
+.couple{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#2b1b3d;
+  padding:15px;
+  border-radius:16px
+}
+
+.couple .score{
+  font-size:22px;
+  font-weight:900;
+  color:#ff75ad
+}
+
+.question{
+  font-size:31px;
+  line-height:1.15;
+  text-align:center;
+  font-weight:900;
+  padding:25px 5px
+}
+
+.badge{
+  text-align:center;
+  color:#ffd1e6;
+  font-weight:800
+}
+
+.scoreboard{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+
+.scorebox{
+  text-align:center;
+  background:#2b1b3d;
+  border-radius:18px;
+  padding:14px
+}
+
+.scorebox .n{
+  font-weight:900;
+  font-size:18px
+}
+
+.scorebox .s{
+  font-size:34px;
+  font-weight:900;
+  color:#ff75ad
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+
+.correct{
+  background:var(--green);
+  color:#09251c;
+  padding:17px;
+  border-radius:15px;
+  font-weight:900
+}
+
+.wrong{
+  background:var(--red);
+  color:white;
+  padding:17px;
+  border-radius:15px;
+  font-weight:900
+}
+
+.choice{
+  width:80%;
+  min-height:32vh;
+  padding:30px 20px;
+  margin:0 auto;
+  border-radius:24px;
+  color:white;
+  font-size:44px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.22);
+  transition:transform .15s,filter .15s,box-shadow .15s
+}
+
+.choice:active{
+  transform:scale(.98)
+}
+
+.choice.ele{
+  background:#1976d2
+}
+
+.choice.ela{
+  background:#e83e8c
+}
+
+.choice.selected{
+  box-shadow:0 0 0 4px rgba(255,255,255,.9),0 10px 30px rgba(0,0,0,.28);
+  filter:brightness(1.08)
+}
+
+.choice small{
+  display:block;
+  font-size:14px;
+  color:rgba(255,255,255,.88);
+  margin-top:5px
+}
+
+.winner{
+  text-align:center
+}
+
+.winner .trophy{
+  font-size:65px
+}
+
+.winner h2{
+  font-size:32px;
+  margin:5px 0
+}
+
+.hidden{
+  display:none!important
+}
+
+.row{
+  display:flex;
+  gap:10px
+}
+
+.row>*{
+  flex:1
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px
+}
+
+.tiny{
+  font-size:12px;
+  color:var(--muted)
+}
+
+.progress{
+  height:8px;
+  background:#39284b;
+  border-radius:20px;
+  overflow:hidden;
+  margin:14px 0
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--pink),var(--purple));
+  transition:.3s
+}
+
+.notice{
+  padding:13px;
+  border-radius:14px;
+  background:#342241;
+  color:#e9dff0;
+  font-size:14px;
+  margin-top:12px
+}
+
+.footer{
+  text-align:center;
+  color:#8f809e;
+  font-size:12px;
+  margin-top:20px
+}
+
+@media(max-width:500px){
+  .app{
+    padding:16px 12px
+  }
+
+  .logo h1{
+    font-size:28px
+  }
+
+  .question{
+    font-size:27px
+  }
+
+  .actions{
+    grid-template-columns:1fr
+  }
+
+  .scoreboard{
+    grid-template-columns:1fr 1fr
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <div id="app"></div>
+
+  <div class="footer">
+    Jogo local • Sem banco de dados • Perguntas embaralhadas a cada partida
+  </div>
+</div>
+
+<script>
+
+const QUESTIONS = [
+"Quem se atrasa mais?",
+"Quem demora mais para se arrumar?",
+"Quem toma um banho mais longo?",
+"Quem dorme mais?",
+"Quem acorda mais cedo?",
+"Quem aperta mais o botão soneca?",
+"Quem fica mais tempo no celular?",
+"Quem responde mensagens mais rápido?",
+"Quem demora mais para responder?",
+"Quem manda mais áudios?",
+"Quem tira mais fotos?",
+"Quem tira mais selfies?",
+"Quem esquece mais onde colocou as coisas?",
+"Quem perde mais as chaves?",
+"Quem esquece mais datas importantes?",
+"Quem é mais organizado?",
+"Quem é mais bagunceiro?",
+"Quem arruma a casa com mais frequência?",
+"Quem cozinha melhor?",
+"Quem come mais?",
+"Quem come mais doce?",
+"Quem pede mais comida por aplicativo?",
+"Quem escolhe o restaurante?",
+"Quem demora mais para escolher o que comer?",
+"Quem bebe mais água?",
+"Quem toma mais café?",
+"Quem gosta mais de experimentar comidas novas?",
+"Quem é mais exigente com comida?",
+"Quem deixa mais comida no prato?",
+"Quem faz mais lanches fora de hora?",
+"Quem acorda com mais fome?",
+"Quem ronca mais?",
+"Quem fala dormindo?",
+"Quem se mexe mais enquanto dorme?",
+"Quem ocupa mais espaço na cama?",
+"Quem rouba mais o cobertor?",
+"Quem dorme mais rápido?",
+"Quem demora mais para pegar no sono?",
+"Quem acorda mais mal-humorado?",
+"Quem fica mais tempo na cama?",
+"Quem é mais pontual?",
+"Quem planeja mais as coisas?",
+"Quem improvisa mais?",
+"Quem esquece compromissos?",
+"Quem faz mais listas?",
+"Quem é mais responsável?",
+"Quem é mais distraído?",
+"Quem presta mais atenção aos detalhes?",
+"Quem muda mais de ideia?",
+"Quem toma decisões mais rápido?",
+"Quem pede mais opinião?",
+"Quem é mais indeciso?",
+"Quem gosta mais de sair?",
+"Quem prefere ficar em casa?",
+"Quem marca mais encontros com amigos?",
+"Quem faz mais amizade facilmente?",
+"Quem conversa mais com desconhecidos?",
+"Quem é mais tímido?",
+"Quem fala mais?",
+"Quem escuta melhor?",
+"Quem interrompe mais nas conversas?",
+"Quem conta mais histórias?",
+"Quem faz mais piadas?",
+"Quem ri mais?",
+"Quem é mais competitivo?",
+"Quem odeia perder mais?",
+"Quem comemora mais uma vitória?",
+"Quem pede desculpas primeiro?",
+"Quem fica bravo mais rápido?",
+"Quem se acalma mais rápido?",
+"Quem é mais paciente?",
+"Quem perde a paciência mais facilmente?",
+"Quem guarda mais rancor?",
+"Quem perdoa mais rápido?",
+"Quem demonstra mais carinho?",
+"Quem diz mais 'eu te amo'?",
+"Quem faz mais surpresas?",
+"Quem dá mais presentes?",
+"Quem lembra mais de pequenos detalhes do outro?",
+"Quem sente mais saudade?",
+"Quem é mais ciumento?",
+"Quem é mais romântico?",
+"Quem manda mais mensagens carinhosas?",
+"Quem gosta mais de abraços?",
+"Quem gosta mais de beijo?",
+"Quem inicia mais conversas sobre o relacionamento?",
+"Quem faz mais planos para o futuro?",
+"Quem fala mais sobre casamento?",
+"Quem escolheria uma viagem de última hora?",
+"Quem planeja melhor uma viagem?",
+"Quem arruma a mala mais rápido?",
+"Quem leva mais coisas na mala?",
+"Quem esquece alguma coisa na viagem?",
+"Quem gosta mais de praia?",
+"Quem prefere montanha?",
+"Quem gosta mais de piscina?",
+"Quem tira mais fotos durante uma viagem?",
+"Quem dorme no caminho?",
+"Quem se perde mais facilmente?",
+"Quem pergunta mais informações durante uma viagem?",
+"Quem dirige melhor?",
+"Quem fica mais nervoso no trânsito?",
+"Quem reclama mais do trânsito?",
+"Quem escolhe a música no carro?",
+"Quem canta mais no carro?",
+"Quem aumenta mais o volume da música?",
+"Quem dança mais?",
+"Quem dança pior?",
+"Quem canta mais alto?",
+"Quem tem mais vergonha de dançar em público?",
+"Quem toparia fazer uma loucura por diversão?",
+"Quem é mais aventureiro?",
+"Quem teria coragem de pular de paraquedas?",
+"Quem experimentaria um esporte radical?",
+"Quem gosta mais de adrenalina?",
+"Quem assiste mais séries?",
+"Quem escolhe o filme?",
+"Quem dorme durante o filme?",
+"Quem assiste episódios seguidos?",
+"Quem pesquisa o final antes?",
+"Quem chora mais com filmes?",
+"Quem gosta mais de terror?",
+"Quem se assusta mais facilmente?",
+"Quem prefere comédia?",
+"Quem gosta mais de desenhos?",
+"Quem passa mais tempo no YouTube?",
+"Quem passa mais tempo no Instagram?",
+"Quem passa mais tempo no TikTok?",
+"Quem acompanha mais notícias?",
+"Quem conhece mais memes?",
+"Quem tem mais aplicativos no celular?",
+"Quem troca de celular mais cedo?",
+"Quem cuida melhor do celular?",
+"Quem tem mais fotos na galeria?",
+"Quem deixa mais notificações acumuladas?",
+"Quem usa mais emojis?",
+"Quem manda mais figurinhas?",
+"Quem faz mais compras online?",
+"Quem pesquisa mais antes de comprar?",
+"Quem compra por impulso?",
+"Quem gosta mais de promoções?",
+"Quem pechincha mais?",
+"Quem economiza mais?",
+"Quem gasta mais com coisas desnecessárias?",
+"Quem empresta dinheiro com mais facilidade?",
+"Quem é mais cuidadoso com dinheiro?",
+"Quem faz mais planos financeiros?",
+"Quem compra mais presentes para o outro?",
+"Quem limpa mais o carro?",
+"Quem cuida mais das plantas?",
+"Quem cuida melhor das coisas?",
+"Quem conserta mais coisas em casa?",
+"Quem chama alguém para consertar?",
+"Quem troca lâmpadas mais rápido?",
+"Quem deixa luz acesa?",
+"Quem deixa porta aberta?",
+"Quem deixa armário aberto?",
+"Quem deixa copo pela casa?",
+"Quem esquece roupa no varal?",
+"Quem acumula mais roupa para lavar?",
+"Quem dobra melhor as roupas?",
+"Quem arruma melhor a cama?",
+"Quem lava mais louça?",
+"Quem suja mais louça?",
+"Quem reclama mais das tarefas domésticas?",
+"Quem faz mais faxina?",
+"Quem é mais cuidadoso com higiene?",
+"Quem usa mais perfume?",
+"Quem demora mais no banheiro?",
+"Quem fica mais tempo se olhando no espelho?",
+"Quem troca de roupa mais vezes?",
+"Quem compra mais roupas?",
+"Quem tem mais sapatos?",
+"Quem combina melhor as roupas?",
+"Quem pede opinião sobre a roupa?",
+"Quem se preocupa mais com aparência?",
+"Quem muda mais o visual?",
+"Quem corta o cabelo com mais frequência?",
+"Quem é mais vaidoso?",
+"Quem se arruma mais para sair?",
+"Quem sai de casa sem conferir o visual?",
+"Quem é mais provável de esquecer um aniversário?",
+"Quem é mais provável de esquecer uma senha?",
+"Quem é mais provável de perder o celular?",
+"Quem é mais provável de chegar atrasado a um voo?",
+"Quem é mais provável de esquecer o carregador?",
+"Quem é mais provável de derrubar o celular?",
+"Quem é mais provável de comprar algo e se arrepender?",
+"Quem é mais provável de ganhar um prêmio?",
+"Quem é mais provável de virar famoso?",
+"Quem é mais provável de começar uma dieta?",
+"Quem é mais provável de desistir de uma dieta?",
+"Quem é mais provável de fazer uma compra inesperada?",
+"Quem é mais provável de dormir no sofá?",
+"Quem é mais provável de rir em uma situação séria?",
+"Quem é mais provável de esquecer por que entrou em um cômodo?",
+"Quem é mais provável de mandar mensagem para a pessoa errada?",
+"Quem é mais provável de esquecer onde estacionou?",
+"Quem é mais provável de começar uma conversa com alguém desconhecido?",
+"Quem é mais provável de adotar um animal por impulso?"
+];
+
+let state = {
+  screen:"home",
+  couples:[],
+  currentCouple:0,
+  questionIndex:0,
+  questions:[],
+  playerChoice:null,
+  roundAnswered:false
+};
+
+const $ = id => document.getElementById(id);
+
+function save(){
+  localStorage.setItem("casalGame",JSON.stringify(state));
+}
+
+function load(){
+  try{
+    const x=JSON.parse(localStorage.getItem("casalGame"));
+    if(x) state=x;
+  }catch(e){}
+}
+
+function shuffle(a){
+  return [...a].sort(()=>Math.random()-.5);
+}
+
+function render(){
+
+  const el=document.getElementById("app");
+
+  if(state.screen==="home")
+    renderHome(el);
+
+  else if(state.screen==="setup")
+    setup(el);
+
+  else if(state.screen==="main")
+    main(el);
+
+  else if(state.screen==="player")
+    player(el);
+
+  else if(state.screen==="winner")
+    winner(el);
+}
+
+
+/* =========================
+   TELA INICIAL
+========================= */
+
+function renderHome(el){
+
+  el.innerHTML=`
+
+  <div class="logo">
+    <div style="font-size:55px">💑</div>
+    <h1>Quem é mais provável?</h1>
+    <p>Jogo de casal • até 25 pontos</p>
+  </div>
+
+  <div class="card">
+
+    <div class="title">
+      Como este celular será usado?
+    </div>
+
+    <p class="muted">
+      Escolha o modo. O celular principal controla as perguntas e a pontuação.
+    </p>
+
+    <div class="grid">
+
+      <button class="role" onclick="goSetup()">
+        <strong>📱 Celular principal</strong>
+        <span>
+          Cadastrar casais, mostrar perguntas e marcar as respostas.
+        </span>
+      </button>
+
+      <button class="role" onclick="goPlayer()">
+        <strong>👤 Celular do jogador</strong>
+        <span>
+          Escolher se você é <b>Ele</b> ou <b>Ela</b> e participar da rodada.
+        </span>
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <b>Regra</b>
+
+    <p class="muted">
+      A cada pergunta, o casal responde quem se encaixa mais.
+      O principal marca se a resposta foi considerada correta.
+      Cada acerto vale 1 ponto.
+      O primeiro casal a chegar a 25 vence.
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <button class="primary" onclick="goCentral()">
+      🎮 Voltar para a Central de Jogos
+    </button>
+
+  </div>
+
+  `;
+}
+
+
+/* =========================
+   CENTRAL
+========================= */
+
+function goCentral(){
+
+  window.location.href="index.html";
+
+}
+
+
+/* =========================
+   CONFIGURAÇÃO
+========================= */
+
+function goSetup(){
+
+  state.screen="setup";
+
+  save();
+
+  render();
+
+}
+
+function setup(el){
+
+  const rows=state.couples.map((c,i)=>`
+
+    <div class="couple">
+
+      <div>
+
+        <b>
+          Casal ${String.fromCharCode(65+i)}
+        </b>
+
+        <div class="tiny">
+          ${esc(c.name)}
+        </div>
+
+      </div>
+
+      <b class="score">
+        ${state.couples[i+""]?.score??0}
+      </b>
+
+    </div>
+
+  `).join("");
+
+  el.innerHTML=`
+
+  <div class="topbar">
+
+    <div class="row" style="flex:0 0 auto">
+
+      <button
+        class="secondary"
+        style="width:auto;padding:9px 13px"
+        onclick="goHome()">
+        ← Voltar
+      </button>
+
+      <button
+        class="secondary"
+        style="width:auto;padding:9px 13px"
+        onclick="goCentral()">
+        🎮 Central
+      </button>
+
+    </div>
+
+    <span class="tiny">
+      CONFIGURAÇÃO
+    </span>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="title">
+      Cadastre os casais
+    </div>
+
+    <p class="muted">
+      Informe um nome para cada casal.
+    </p>
+
+
+    <div class="row">
+
+      <input
+        class="input"
+        id="coupleName"
+        placeholder="Ex.: Ana & João">
+
+      <button
+        class="primary"
+        style="flex:0 0 110px;margin:7px 0"
+        onclick="addCouple()">
+        Adicionar
+      </button>
+
+    </div>
+
+
+    <div class="couple-list">
+
+      ${
+        rows ||
+        '<p class="muted">Nenhum casal cadastrado.</p>'
+      }
+
+    </div>
+
+
+    <button
+      class="primary"
+      onclick="startGame()"
+      ${state.couples.length<1?'disabled':''}>
+      Começar jogo
+    </button>
+
+  </div>
+
+  `;
+
+}
+
+
+function addCouple(){
+
+  const v=$("coupleName").value.trim();
+
+  if(!v)return;
+
+  state.couples.push({
+    name:v,
+    score:0
+  });
+
+  $("coupleName").value="";
+
+  save();
+
+  render();
+
+}
+
+
+function startGame(){
+
+  if(!state.couples.length)return;
+
+  state.couples.forEach(c=>c.score=0);
+
+  state.questions=shuffle(QUESTIONS);
+
+  state.questionIndex=0;
+
+  state.currentCouple=0;
+
+  state.roundAnswered=false;
+
+  state.screen="main";
+
+  save();
+
+  render();
+
+}
+
+
+/* =========================
+   JOGO PRINCIPAL
+========================= */
+
+function main(el){
+
+  const c=state.couples[state.currentCouple];
+
+  if(!c)
+    return goSetup();
+
+  const q=
+    state.questions[
+      state.questionIndex % state.questions.length
+    ];
+
+  const pct=
+    Math.min(
+      100,
+      (c.score/25)*100
+    );
+
+
+  el.innerHTML=`
+
+  <div class="topbar">
+
+    <div class="row" style="flex:0 0 auto">
+
+      <button
+        class="secondary"
+        style="width:auto;padding:9px 13px"
+        onclick="goHome()">
+        ⌂ Início
+      </button>
+
+      <button
+        class="secondary"
+        style="width:auto;padding:9px 13px"
+        onclick="goCentral()">
+        🎮 Central
+      </button>
+
+    </div>
+
+    <span class="tiny">
+      CELULAR PRINCIPAL
+    </span>
+
+  </div>
+
+
+  <div class="scoreboard">
+
+    ${
+      state.couples.map(x=>`
+
+        <div class="scorebox">
+
+          <div class="n">
+            ${esc(x.name)}
+          </div>
+
+          <div class="s">
+            ${x.score}
+          </div>
+
+        </div>
+
+      `).join("")
+    }
+
+  </div>
+
+
+  <div class="progress">
+    <i style="width:${pct}%"></i>
+  </div>
+
+
+  <div class="card">
+
+    <div class="badge">
+      PERGUNTA PARA
+      ${esc(c.name).toUpperCase()}
+    </div>
+
+
+    <div class="question">
+      ${esc(q)}
+    </div>
+
+
+    <div class="notice">
+
+      O casal deve escolher
+      <b>Ele</b> ou <b>Ela</b>.
+
+      Depois, marque abaixo se a resposta foi considerada correta.
+
+    </div>
+
+
+    <div
+      class="actions"
+      style="margin-top:14px">
+
+      <button
+        class="correct"
+        onclick="answer(true)">
+
+        ✓ RESPOSTA CERTA
+
+        <br>
+
+        <small>
+          +1 ponto
+        </small>
+
+      </button>
+
+
+      <button
+        class="wrong"
+        onclick="answer(false)">
+
+        ✕ RESPOSTA ERRADA
+
+        <br>
+
+        <small>
+          sem ponto
+        </small>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <button
+      class="secondary"
+      onclick="nextCouple()">
+
+      Próximo casal
+
+    </button>
+
+
+    <button
+      class="secondary danger"
+      style="margin-top:9px"
+      onclick="resetGame()">
+
+      Encerrar e limpar partida
+
+    </button>
+
+  </div>
+
+  `;
+
+}
+
+
+function answer(correct){
+
+  const c=state.couples[state.currentCouple];
+
+  if(correct)
+    c.score++;
+
+  if(c.score>=25){
+
+    state.screen="winner";
+
+    save();
+
+    render();
+
+    return;
+
+  }
+
+  nextCouple();
+
+}
+
+
+function nextCouple(){
+
+  state.currentCouple=
+    (state.currentCouple+1)
+    %
+    state.couples.length;
+
+  state.questionIndex++;
+
+  if(state.questionIndex>=state.questions.length){
+
+    state.questions=shuffle(QUESTIONS);
+
+    state.questionIndex=0;
+
+  }
+
+  state.roundAnswered=false;
+
+  save();
+
+  render();
+
+}
+
+
+/* =========================
+   CELULAR DO JOGADOR
+========================= */
+
+function goPlayer(){
+
+  state.screen="player";
+
+  save();
+
+  render();
+
+}
+
+
 function player(el){
- const eleSel=state.playerChoice==='Ele'?' selected':'';
- const elaSel=state.playerChoice==='Ela'?' selected':'';
- const clearBtn=state.playerChoice
-   ? `<button class="secondary" onclick="clearPlayerSelection()">Limpar seleção</button>`
-   : '';
- el.innerHTML=`<div class="topbar">
-   <div class="row" style="flex:0 0 auto">
-     <button class="secondary" style="width:auto;padding:9px 13px" onclick="goHome()">← Voltar</button>
-     <button class="secondary" style="width:auto;padding:9px 13px" onclick="goCentral()">🎮 Central</button>
-   </div>
-   <span class="tiny">CELULAR DO JOGADOR</span>
- </div>
- <div style="min-height:calc(100vh - 130px);display:flex;align-items:center;justify-content:center;padding:12px">
-   <div style="width:100%;display:grid;gap:18px">
-     <button class="choice ele${eleSel}" onclick="playerSelected('Ele')">ELE</button>
-     <button class="choice ela${elaSel}" onclick="playerSelected('Ela')">ELA</button>
-     ${clearBtn}
-   </div>
- </div>`;
+
+  const eleSel=
+    state.playerChoice==='Ele'
+    ? ' selected'
+    : '';
+
+  const elaSel=
+    state.playerChoice==='Ela'
+    ? ' selected'
+    : '';
+
+  const clearBtn=
+    state.playerChoice
+    ?
+    `<button
+      class="secondary"
+      onclick="clearPlayerSelection()">
+      Limpar seleção
+    </button>`
+    :
+    '';
+
+
+  el.innerHTML=`
+
+  <div class="topbar">
+
+    <div class="row" style="flex:0 0 auto">
+
+      <button
+        class="secondary"
+        style="width:auto;padding:9px 13px"
+        onclick="goHome()">
+        ← Voltar
+      </button>
+
+      <button
+        class="secondary"
+        style="width:auto;padding:9px 13px"
+        onclick="goCentral()">
+        🎮 Central
+      </button>
+
+    </div>
+
+    <span class="tiny">
+      CELULAR DO JOGADOR
+    </span>
+
+  </div>
+
+
+  <div
+    style="
+      min-height:calc(100vh - 130px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px
+    ">
+
+    <div
+      style="
+        width:100%;
+        display:grid;
+        gap:18px
+      ">
+
+
+      <button
+        class="choice ele${eleSel}"
+        onclick="playerSelected('Ele')">
+
+        ELE
+
+      </button>
+
+
+      <button
+        class="choice ela${elaSel}"
+        onclick="playerSelected('Ela')">
+
+        ELA
+
+      </button>
+
+
+      ${clearBtn}
+
+    </div>
+
+  </div>
+
+  `;
+
 }
+
+
 function playerSelected(x){
- state.playerChoice=x;
- save();
- render();
+
+  state.playerChoice=x;
+
+  save();
+
+  render();
+
 }
+
+
 function clearPlayerSelection(){
- state.playerChoice=null;
- save();
- render();
+
+  state.playerChoice=null;
+
+  save();
+
+  render();
+
 }
+
+
+/* =========================
+   VENCEDOR
+========================= */
+
 function winner(el){
- const c=state.couples[state.currentCouple];
- el.innerHTML=`<div class="card winner"><div class="trophy">🏆</div><div class="tiny">VENCEDOR</div><h2>${esc(c.name)}</h2><p class="muted">Chegou a 25 pontos!</p><div class="scorebox"><div class="s">25</div><div class="n">pontos</div></div><button class="primary" style="margin-top:16px" onclick="goSetup()">Nova partida</button><button class="secondary" style="margin-top:9px" onclick="goCentral()">🎮 Voltar para a Central de Jogos</button></div>`;
+
+  const c=state.couples[state.currentCouple];
+
+  el.innerHTML=`
+
+  <div class="card winner">
+
+    <div class="trophy">
+      🏆
+    </div>
+
+    <div class="tiny">
+      VENCEDOR
+    </div>
+
+    <h2>
+      ${esc(c.name)}
+    </h2>
+
+    <p class="muted">
+      Chegou a 25 pontos!
+    </p>
+
+
+    <div class="scorebox">
+
+      <div class="s">
+        25
+      </div>
+
+      <div class="n">
+        pontos
+      </div>
+
+    </div>
+
+
+    <button
+      class="primary"
+      style="margin-top:16px"
+      onclick="goSetup()">
+
+      Nova partida
+
+    </button>
+
+
+    <button
+      class="secondary"
+      style="margin-top:9px"
+      onclick="goCentral()">
+
+      🎮 Voltar para a Central de Jogos
+
+    </button>
+
+  </div>
+
+  `;
+
 }
-function resetGame(){if(confirm("Encerrar a partida e apagar os casais desta sessão?")){localStorage.removeItem("casalGame");state={screen:"home",couples:[],currentCouple:0,questionIndex:0,questions:[],playerChoice:null};render()}}
-function goHome(){state.screen="home";save();render()}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-load();render();
+
+
+/* =========================
+   ENCERRAR
+========================= */
+
+function resetGame(){
+
+  if(
+    confirm(
+      "Encerrar a partida e apagar os casais desta sessão?"
+    )
+  ){
+
+    localStorage.removeItem("casalGame");
+
+    state={
+      screen:"home",
+      couples:[],
+      currentCouple:0,
+      questionIndex:0,
+      questions:[],
+      playerChoice:null
+    };
+
+    render();
+
+  }
+
+}
+
+
+/* =========================
+   NAVEGAÇÃO
+========================= */
+
+function goHome(){
+
+  state.screen="home";
+
+  save();
+
+  render();
+
+}
+
+
+/* =========================
+   SEGURANÇA HTML
+========================= */
+
+function esc(s){
+
+  return String(s).replace(
+    /[&<>"']/g,
+    m=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[m])
+  );
+
+}
+
+
+/* =========================
+   INICIALIZAÇÃO
+========================= */
+
+load();
+
+render();
+
 </script>
-</body></html>
+
+</body>
+</html>
